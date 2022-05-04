@@ -1,0 +1,138 @@
+.frameheader {
+  display: flex !important;
+  // justify-content: space-between !important;
+  margin: auto;
+}
+
+// FRAME LOGO TIKI
+.framelogo {
+}
+.linklogo {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  text-decoration: none;
+}
+.imglogo {
+  width: 60px;
+  height: 40px;
+}
+.imglogofreeship {
+  margin-top: 10%;
+  width: 87px;
+  height: 12px;
+}
+//END FRAME LOGO TIKI
+
+// PROPOSE SEARCH
+.boxProposeSearch {
+  display: flex;
+  flex-flow: row wrap;
+  // alignItems: 'center',
+  width: 40%;
+  margin-left: 8%;
+  margin-top: 1%;
+  list-style-type: none;
+  & > li {
+    margin-left: 20px;
+    cursor: pointer;
+  }
+}
+// BOX LOGIN
+.boxbuttondk {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  white-space: nowrap;
+  font-size: 11px !important;
+  line-height: 16px;
+  float: left !important;
+}
+.logouser {
+  width: 32px;
+  height: 32px;
+  margin-left: 40%;
+  margin-top: 8px;
+}
+// ICON CART
+.frameiconcart {
+  // background: red !important;
+
+  margin-top: -8px !important;
+}
+.contentcart {
+  // background-color: red;
+  margin-top: 10% !important;
+}
+
+/* MOBILE WIDTH < 740px */
+@media screen and (max-width: 769px) {
+  //LOGO TIKI
+  .frameheader {
+    // margin: auto;
+    margin-left: 1%;
+    // margin: auto;
+  }
+
+  .framelogo {
+    margin-bottom: 7% !important;
+  }
+  .imglogo {
+    width: 60px;
+    height: 40px;
+  }
+  .imglogofreeship {
+    display: none;
+  }
+  // PROPOSE SEARCH
+  .boxProposeSearch {
+    width: 100%;
+    margin-left: 8%;
+    margin-top: 1%;
+    & > li {
+      margin-left: 20px;
+      cursor: pointer;
+    }
+  }
+  // DRAWER FRAME
+  .drawerframe {
+    margin-left: 15%;
+    margin-bottom: 5%;
+  }
+}
+
+/* TABLET WIDTH >=740px and width < 1024px*/
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+  //LOGO TIKI
+  .frameheader {
+    // margin: auto;
+    margin-left: 1%;
+    // margin: auto;
+  }
+
+  .framelogo {
+    margin-bottom: 7% !important;
+  }
+  .imglogo {
+    width: 60px;
+    height: 40px;
+  }
+  .imglogofreeship {
+    display: none;
+  }
+  // PROPOSE SEARCH
+  .boxProposeSearch {
+    width: 100%;
+    margin-left: 8%;
+    margin-top: 1%;
+    & > li {
+      margin-left: 20px;
+      cursor: pointer;
+    }
+  }
+  // DRAWER FRAME
+  .drawerframe {
+    margin-left: 12%;
+    margin-bottom: 5%;
+  }
+}

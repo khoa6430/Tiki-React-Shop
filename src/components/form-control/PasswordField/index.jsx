@@ -25,7 +25,7 @@ function PasswordField(props) {
         setShowPassword(x => !x);
     }
     useEffect(()=>{
-        console.log(form);
+        // console.log(form);
       },[]);
 
     return (

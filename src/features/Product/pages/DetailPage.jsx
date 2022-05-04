@@ -89,59 +89,39 @@ function DetailPage(props) {
             quantity : formValues.quantity
         }
         
+        // SAVE ORDER TO FIREBASE
         onValue(ref(db,`list-cart/${currentUser.id}`), (snapshot) => {
             var data = snapshot.val();
             if(data){
+                data = Object.values(data);
                 let index = _.findIndex(data,cartProduct=>{
                     return cartProduct.id == product.id;
                 })
-                if(index == -1 ){
-                    set(ref(db, `list-cart/${currentUser.id}`),[...data, productBuy]);
+                if(index == -1 ){ //if product not exist in cart
+                    set(ref(db, `list-cart/${currentUser.id}/${productId}`),productBuy);
                 }
-                else{
-                    // console.log(index);
-                    set(ref(db, `list-cart/${currentUser.id}/${index}`),{
+                else{ //  if product exist in cart ==> increase quantity
+                    var getQuantityProduct;
+                    //get quantity product
+                    onValue(ref(db,`list-cart/${currentUser.id}/${productId}`), (snapshot) => {
+                        var data = snapshot.val();
+                        getQuantityProduct = data.quantity;
+                    },{onlyOnce: true});
+                    //increase quantity product
+                    set(ref(db, `list-cart/${currentUser.id}/${productId}`),{
                         ...productBuy,
-                        quantity : formValues.quantity + data[index].quantity
+                        quantity : formValues.quantity + getQuantityProduct,
                     });
                 }
             }
-            else{
-                set(ref(db, `list-cart/${currentUser.id}`),[productBuy]);
+            else{ //if cart haven't any product ==> add
+                set(ref(db, `list-cart/${currentUser.id}/${productId}`),productBuy);
             }
         },{
             onlyOnce: true
-          });
+        });
 
-        //Use firebase
-        //If user not login save to local
-      
-
-        // Object.values(data).map((x) => {
-        //         //if product exist in cart ==> update quantity
-              
-        //         if(x.id === productBuy.id){
-        //             console.log("bang");
-        //             set(ref(db, `list-cart/${currentUser.id}/${product.id}`),
-        //                 {   ...productBuy,
-        //                     quantity : (x.quantity + formValues.quantity)
-        //                 }
-        //             );
-        //         }
-        //         else if(x.id !== productBuy.id){
-        //             set(ref(db,`list-cart/${currentUser.id}/${product.id}`),productBuy);
-        //         }
-
-        // });
-     
-
-  
-        
-
-
-
-    }     
-
+    }
                                                                                                                                                                                                                                                    
     return (
         <Box className={classes.root}>
@@ -177,6 +157,6 @@ function DetailPage(props) {
             </Container>
         </Box>
     );
+    
 }
-
 export default DetailPage;

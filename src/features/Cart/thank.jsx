@@ -23,11 +23,14 @@ const useStyle = makeStyles(theme=>({
    
 })) 
 
-
 function ThanksYouFeature(props) {
     const classes = useStyle();
     var listProduct = props.history.location.state.listProductSelected;
     var totalOrder = props.history.location.state.totalOrder;
+
+
+
+
     return (
         <Box className={classes.root}>
             <Container>
@@ -45,7 +48,7 @@ function ThanksYouFeature(props) {
                                 <Typography style={{fontSize:'20px'}}>Chi tiết đơn hàng</Typography>
                             </Box>
                             {listProduct.map((x) =>(
-                                <Box style={{display:'flex',paddingLeft:'16%',paddingTop:'1%',marginTop:'20px',width:'100%',paddingBottom:'2%'}}>
+                                <Box key = {x.id} style={{display:'flex',paddingLeft:'16%',paddingTop:'1%',marginTop:'20px',width:'100%',paddingBottom:'2%'}}>
                                     <Box style={{width:'250px'}}>
                                         <Typography style={{fontSize:'20px'}}>{x.product.name}</Typography>
                                     </Box>

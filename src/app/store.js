@@ -6,7 +6,8 @@ const {configureStore} = require('@reduxjs/toolkit');
 const rootReducer = {
     user : userReducer,
     cart : cartReducer,
-    search : searchReducer
+    search : searchReducer,
+    
 };
 
 const store = configureStore({

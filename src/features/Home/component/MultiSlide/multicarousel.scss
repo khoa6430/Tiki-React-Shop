@@ -1,0 +1,179 @@
+@keyframes example {
+  from {
+    fill: orange;
+  }
+  to {
+    fill: red;
+  }
+}
+.carousel2 {
+  width: 78.5vw;
+  margin: auto;
+  .slidecarouselfs {
+    width: 78.5vw;
+  }
+}
+
+.boxItemFS {
+  transition: box-shadow 0.3s;
+  // width: 100%;
+  // height: 500px; */
+  /* margin: 50px; */
+  border-radius: 10px;
+  background: #fff;
+  float: left;
+}
+.boxItemFS:hover {
+  cursor: pointer;
+  box-shadow: 0 0 11px RGB(33, 33, 33, 0.2);
+}
+.carousel2 .slick-arrow.slick-prev,
+.carousel2 .slick-arrow.slick-next {
+  background: #fcfcfc;
+  width: 35px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  box-shadow: 1px 2px 10px -1px RGB(0 0 0 / 30%);
+  opacity: 0.5;
+}
+.carousel2 .slick-arrow.slick-prev:hover,
+.carousel2 .slick-arrow.slick-next:hover {
+  cursor: pointer;
+  background: gray;
+}
+.carousel2 .slick-prev {
+  left: 0;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.carousel2 .slick-next {
+  right: 0;
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+}
+.slick-prev::before,
+.slick-next::before {
+  display: none;
+}
+
+// IMAGE LOGO FLASH SALE
+
+.imgfreeship {
+  position: absolute;
+  border: 1px solid red;
+}
+
+.imgflash {
+  // animation: 0.6s linear 0s infinite normal none running example;
+
+  width: 1.5vw;
+}
+
+.test {
+  animation: color-change 1s infinite;
+}
+.framegiasoc {
+  display: flex;
+  background: white;
+  padding-top: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 1%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.dealprice {
+  color: RGB(255, 66, 78);
+  text-align: left;
+  /* font-size: 16px; */
+  /* line-height: 24px; */
+  font-weight: 500;
+}
+.percentprice {
+  margin-top: 2%;
+  height: 15px;
+  padding: 0px 2px;
+  line-height: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 8px;
+  border: 1px solid RGB(255, 66, 78);
+  border-radius: 2px;
+  background-color: RGB(255, 240, 241);
+  color: RGB(255, 66, 78);
+}
+
+.deals__qty {
+  background-color: RGB(255, 170, 175);
+  color: RGB(255, 255, 255);
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  width: 90%;
+  height: 20px;
+}
+.deals__progress {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: RGB(255, 66, 78);
+  height: 20px;
+  border-radius: 10px;
+  min-width: 20px;
+}
+.vmb {
+  font-size: 11px;
+  line-height: 16px;
+  padding: 0px 0px 0px 6px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+}
+
+.boxCountDown {
+  margin-left: auto;
+  margin-top: 5px;
+}
+
+.multi__image {
+}
+
+// IMAGE LOGO FLASH SALE
+
+/* MOBILE WIDTH < 740px */
+@media screen and (max-width: 740px) {
+  .carousel2 {
+    width: 90vw;
+    .slidecarouselfs {
+      width: 90vw;
+    }
+  }
+  .imggiasoc {
+    width: 15vw;
+  }
+  .imgflash {
+    width: 4vw;
+  }
+  .imghomnay {
+    width: 18vw;
+  }
+}
+
+/* TABLET WIDTH >=740px and width < 1024px*/
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+  .carousel2 {
+    width: 90vw;
+    .slidecarouselfs {
+      width: 90vw;
+    }
+  }
+}

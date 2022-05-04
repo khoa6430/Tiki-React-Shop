@@ -18,6 +18,11 @@ import { useDispatch } from 'react-redux';
 import { getMe } from './features/Auth/userSlice';
 import Login from "./features/Auth/component/Login";
 import { unwrapResult } from '@reduxjs/toolkit';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import AdminDashboard from './features/Admin/AdminDashboard';
+import HomeComponent from "./features/Home/HomeComponent";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -54,18 +59,19 @@ function App() {
   return (
     <div className="App">
       <Header />
-      {/* <Button onClick={showNoti}>SHOW NOTIFY</Button> */}
       <Switch>
-        <Route path="/" component={TodoFeature} exact />
-        {/* <Route path="/todos" component={TodoFeature} />
-        <Route path="/albums" component={AlbumFeature} /> */}
+        <Route path="/" component={HomeComponent} exact />
+  
         <Route path="/products" component={ProductFeature}/>
         <Route path="/cart" component={CartFeature}/>
         <Route path="/thanks" component={ThanksYouFeature}/>
+        <Route path="/admin-dashboard" component={AdminDashboard}/>
         <Route component={NotFound} />
       </Switch>
       <Footer />
+      
+      
     </div>
-  ); 
-}
+    ); 
+  }
 export default App;

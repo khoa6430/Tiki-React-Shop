@@ -8,15 +8,12 @@ export default function useProductDetail(productId){
     useEffect(()=>{
         (async ()=>{
             try{
-                onValue(ref(db,'list-product'), (snapshot) => {
-                    //do firebase 
-                    var data = snapshot.val();
-                    // var getProduct = {};
-                    data = data.filter(x=>x.id == productId);
-                    var getProduct = data[0];
+                onValue(ref(db,`list-product/${productId}`), (snapshot) => {
+
+                    var getProduct = snapshot.val();
+
                     setLoading(true);
                     setProduct(getProduct);
-
                 });
 
             }catch(error){

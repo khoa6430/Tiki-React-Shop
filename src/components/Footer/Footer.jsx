@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme)=>({
 
     },
     framefooter:{
-        marginTop:'auto',
-        padding: '80px 60px',
+        marginTop:'4%',
+        paddingTop:'2%',
         background: 'white',
         // position: '',
         bottom: '0',
@@ -34,11 +34,17 @@ return (
 	<Box className={classes.framefooter}>
         <h1 style={{ color: "black",
                     textAlign: "center",
-                    marginTop: "-50px" }}>
+                    marginTop: "0px" }}>
            Tiki - Thật nhanh, thật chất lượng, thật rẻ
         </h1>
         <Container>
             <Row>
+            <Column>
+                <Heading>Hỗ trợ khách hàng</Heading>
+                <FooterLink href="#">Các câu hỏi thường gặp</FooterLink>
+                <FooterLink href="#">Gửi yêu cầu hỗ trợ</FooterLink>
+                <FooterLink href="#">Hướng dẫn đặt hàng</FooterLink>
+            </Column>
             <Column>
                 <Heading>Hỗ trợ khách hàng</Heading>
                 <FooterLink href="#">Các câu hỏi thường gặp</FooterLink>

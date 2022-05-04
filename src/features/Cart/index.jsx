@@ -1,7 +1,7 @@
 import { Box, Checkbox, Container, FormControlLabel, Grid, makeStyles, Paper, Typography,Button } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import { DeleteOutlined } from '@material-ui/icons';
-import { onValue, ref } from "firebase/database";
+import { get, onValue, ref, remove } from "firebase/database";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { db } from "../../firebase";
@@ -10,6 +10,9 @@ import { removeFromCart,removeAllFromCart } from './cartSlice';
 import { cartTotalSelector } from './selector';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+
 CartFeature.propTypes = {
 };
 
@@ -49,7 +52,6 @@ const useStyle = makeStyles(theme=>({
 })) 
 
 
-
 function CartFeature(props) {
     const classes = useStyle();
     const history = useHistory();
@@ -58,87 +60,150 @@ function CartFeature(props) {
     //var allItemCart = useSelector(state => state.cart.cartItems);
 
     const currentUser = useSelector((state) => state.user.current);
-    var allItemCart;    
+    var allItemCart = [];    
+
+    //     var checkCartUserEmpty = snapshot.child(`${currentUser.id}`).exists();
+    
+
     onValue(ref(db,`list-cart/${currentUser.id}`), (snapshot) => {
-         allItemCart = snapshot.val();
+        
+        allItemCart = snapshot.val();
+
+        // console.log('allItemCart',allItemCart);
+        //convert object to array value
+        if(allItemCart!== null ){
+            allItemCart = Object.values(allItemCart);
+        }
+
+        // console.log("2", allItemCart);
+        // console.log("3",typeof(allItemCart));
+
     });
 
-    
+
     const [selected, setSelected] = useState([]);
     const [totalSelected, setTotalSelected] = useState(0);
     const dispatch = useDispatch();
- 
+
+
     const handleRemoveProduct = (idProduct) =>{
+        //delete redux
         const actionRemoveProduct = removeFromCart(idProduct);
         dispatch(actionRemoveProduct);
+        //delete fire base
+        // console.log("da remove",idProduct);
+        remove(ref(db,`list-cart/${currentUser.id}/${idProduct}`));
+        //Calculate again total price 
+        sumTotalOrder();
+
+
     };
     const handleRemoveAllProduct = () =>{
+
         const actionRemoveAllProduct = removeAllFromCart();
         dispatch(actionRemoveAllProduct);
+
+        if(allItemCart != null){
+            for(var j=0;j<selected.length;j++){
+                console.log("DA REMOVE",selected[j]);
+                remove(ref(db,`list-cart/${currentUser.id}/${selected[j]}`));
+            }
+        }
+        sumTotalOrder();
+
     };
-    //CHECK BOX
-       //Calculate total selected
+
+    // CHECK BOX
+    //    Calculate total selected
     const sumTotalOrder = () =>{
         var totalOrder = 0;
-        if(selected.length != 0){
-            for(var i=0;i<allItemCart.length;i++){
+        if(allItemCart != null){
                 for(var j=0;j<selected.length;j++){
-                    if(allItemCart[i].id == Number(selected[j])){
-                        totalOrder += allItemCart[i].product.salePrice * allItemCart[i].quantity;
+                    console.log(selected[j]);
+                }
+
+            if(selected.length != 0){
+                for(var i=0;i<allItemCart.length;i++){
+                    for(var j=0;j<selected.length;j++){
+                        if(allItemCart[i].id == Number(selected[j])){
+                            totalOrder += allItemCart[i].product.salePrice * allItemCart[i].quantity;
+                        }
                     }
                 }
+                // console.log(totalOrder);
+            
             }
-            console.log(totalOrder);
-        
+            setTotalSelected(totalOrder);
+            //return value;
         }
-        setTotalSelected(totalOrder);
-        //return value;
+        else{   //delete last product incart
+            setTotalSelected(totalOrder);
+        }
    }
     useEffect(()=>{
         sumTotalOrder();
     },[selected]);
+    var isAllSelected;
+    if(allItemCart != null){
+        isAllSelected = 
+        // allItemCart.length > 0 && selected.length === allItemCart.length;
+        Object.keys(allItemCart).length > 0 && selected.length === Object.keys(allItemCart).length;
+    }
+    else{
+        isAllSelected = false;
+    }
 
 
-    const isAllSelected = 
-    allItemCart.length > 0 && selected.length === allItemCart.length;
 
     const handleChange = (event) => {
         const value = event.target.value;
-
-        if (value === "all") {
-            var getproductID = [];
-            allItemCart.forEach((element) => {
-                getproductID.push(element.id.toString());
-            });
-        
-            setSelected(selected.length === allItemCart.length ? [] : getproductID);
-
-            return;
+        if(allItemCart !=null ){
+            if (value === "all") {
+                var getproductID = [];
+                allItemCart.forEach((element) => {
+                    getproductID.push(element.id.toString());
+                });
+            
+                setSelected(selected.length ===  Object.keys(allItemCart).length ? [] : getproductID);
+    
+                return;
+            }
+            // added below code to update selected options
+            const list = [...selected];
+            const index = list.indexOf(value);
+            index === -1 ? list.push(value) : list.splice(index, 1);
+          
+            setSelected(list);
         }
-        // added below code to update selected options
-        const list = [...selected];
-        const index = list.indexOf(value);
-        index === -1 ? list.push(value) : list.splice(index, 1);
-      
-        setSelected(list);
- 
     };
  
 
     var arrProductSelected = [];
+
     const handleBuy = ()=>{
-        //get product from cart user selected from state.selected to buy 
-        for(var i=0;i<allItemCart.length;i++){
-            for(var j=0;j<selected.length;j++){
-                if(allItemCart[i].id == Number(selected[j])){
-                    arrProductSelected.push(allItemCart[i])
-                    //delete product from cart
-                    const actionRemoveProduct = removeFromCart(Number(selected[j]));
-                    dispatch(actionRemoveProduct);
+        if(allItemCart !=null && allItemCart.length > 0 && selected.length > 0){
+            //get product from cart user selected from state.selected to buy 
+            console.log("do dai " , allItemCart.length);
+            for(var i=0;i<allItemCart.length;i++){
+                for(var j=0;j<selected.length;j++){
+                    if(allItemCart[i].id == Number(selected[j])){
+                        arrProductSelected.push(allItemCart[i])
+                        //delete product from cart
+                        const actionRemoveProduct = removeFromCart(Number(selected[j]));
+                        dispatch(actionRemoveProduct);
+                        //delete product from firebase
+                        if(allItemCart != null){
+                            for(var j=0;j<selected.length;j++){
+                                console.log("DA REMOVE",selected[j]);
+                                remove(ref(db,`list-cart/${currentUser.id}/${selected[j]}`));
+                            }
+                        }
+                    }
                 }
             }
+            console.log(arrProductSelected);
         }
-        console.log(arrProductSelected);
+        
     }
 
 
@@ -158,7 +223,7 @@ function CartFeature(props) {
                         <Paper evalation={0} style={{display:'flex',height:'40px',width:'100%',paddingTop:'13px'}}>
                             <Box style={{marginLeft:'0px'}}>
                                     <Checkbox
-                                        value='all' 
+                                        value='all'
                                         checked={isAllSelected} 
                                         // indeterminate={checked[0] !== checked[1]}
                                         // indeterminate={false}
@@ -175,8 +240,8 @@ function CartFeature(props) {
                             > <DeleteOutlined/></Box>
                         </Paper>
                         <Paper evalation={0} style={{display:'block',marginTop:'3%',width:'100%'}}>
-                            {allItemCart.map((x) =>(
-                                <Box style={{marginLeft:'0px',display:'flex',paddingTop:'3%'}}>
+                            {allItemCart && allItemCart.map((x) =>(
+                                <Box  key={x.id} style={{marginLeft:'0px',display:'flex',paddingTop:'3%'}}>
                                    <Box style={{display:'flex'}}>
                                        <Box key={x.id}>
                                                 <Checkbox 
@@ -213,7 +278,7 @@ function CartFeature(props) {
                                     </Box>
                                 </Box>
                                                          
-                            ))} 
+                            ))}
                     
                         </Paper>
                     </Grid>
@@ -269,11 +334,10 @@ function CartFeature(props) {
                                     state: {
                                         totalOrder: totalSelected,
                                         listProductSelected: arrProductSelected,
-                                      },
+                                    },
                                 }}
                             >
                                 <Button variant="contained" className={classes.buttonmuahang} onClick={handleBuy}>Mua hàng</Button>
-                   
                             </Link>
    
                         </Box>

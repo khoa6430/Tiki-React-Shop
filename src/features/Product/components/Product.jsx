@@ -23,9 +23,8 @@ function Product({product}) {
     return (
         <Box padding={1} onClick={handleClick}>
             <Box padding={1}>
-                {/* <img src={thumbnailUrl} alt={product.name} width="100%"/> */}
-                <img src={product.thumbnail.url ? `${product.thumbnail.url}`
-                :`${product.thumbnail}`} alt={product.name} width="100%"/>
+                <img src={product.thumbnail} alt={product.name} width="100%"/>
+
             </Box>
             <Typography variant='body2'>{product.name}</Typography>
             <Typography variant='body2'>     

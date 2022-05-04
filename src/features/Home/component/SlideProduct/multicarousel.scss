@@ -1,0 +1,89 @@
+.carousel3 {
+  width: 79.5vw;
+  background: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: 20px auto;
+  padding-bottom: 20px;
+}
+.boxItemFS {
+  transition: box-shadow 0.3s;
+  /* width: 300px; */
+  height: 40%;
+  /* margin: 50px; */
+  background: #fff;
+  float: left;
+  border: 1px solid RGB(238, 238, 238);
+  border-radius: 8px;
+}
+.boxItemFS:hover {
+  cursor: pointer;
+  box-shadow: 0 0 11px RGB(33, 33, 33, 0.2);
+}
+.carousel3 .slick-arrow.slick-prev,
+.carousel3 .slick-arrow.slick-next {
+  background: white;
+  width: 35px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  box-shadow: 1px 2px 10px -1px RGB(0 0 0 / 30%);
+  opacity: 0.5;
+}
+.carousel3 .slick-arrow.slick-prev:hover,
+.carousel3 .slick-arrow.slick-next:hover {
+  cursor: pointer;
+  background: gray;
+}
+.carousel3 .slick-prev {
+  left: 0;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.carousel3 .slick-next {
+  right: 0;
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+}
+.slick-prev::before,
+.slick-next::before {
+  display: none;
+}
+.custom-indicator {
+  /* bottom: -65px; */
+}
+.slick-dots {
+  /* top:0%; */
+}
+.custom-indicator li {
+  width: 50px;
+  height: 50px;
+  filter: grayscale(100%);
+}
+.custom-indicator li.slick-active {
+  filter: grayscale(0%);
+}
+
+.multi__image {
+  border: 1px solid RGB(238, 238, 238);
+  border-radius: 8px;
+  width: 598px;
+  height: 201px;
+  object-fit: cover;
+}
+
+/* MOBILE WIDTH < 740px */
+@media screen and (max-width: 740px) {
+  .carousel3 {
+    width: 90vw;
+  }
+}
+
+/* TABLET WIDTH >=740px and width < 1024px*/
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+  .carousel3 {
+    width: 90vw;
+  }
+}

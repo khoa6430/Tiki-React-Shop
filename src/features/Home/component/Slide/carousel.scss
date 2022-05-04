@@ -1,0 +1,103 @@
+.carousel {
+  /* position: relative; */
+
+  width: 52vw;
+  border-radius: 8px;
+  .slick-list {
+    border-radius: 8px;
+  }
+  margin-bottom: 1.5%;
+}
+.imgslidecp {
+  border-radius: 8px;
+}
+.carousel .slick-arrow.slick-prev,
+.carousel .slick-arrow.slick-next {
+  /* background:red; */
+  width: 35px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  box-shadow: 1px 2px 10px -1px RGB(0 0 0 / 30%);
+  opacity: 0.5;
+}
+.carousel .slick-arrow.slick-prev:hover,
+.carousel .slick-arrow.slick-next:hover {
+  cursor: pointer;
+  background: gray;
+}
+.carousel .slick-prev {
+  left: 0;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.carousel .slick-next {
+  right: 0px;
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+}
+.slick-prev::before,
+.slick-next::before {
+  display: none;
+}
+.iconarrow {
+  color: blue;
+  font-size: 30px;
+}
+.slick-dots {
+  position: absolute;
+  /* top: 90%;  */
+  bottom: 0;
+}
+.slick-dots li.slick-active button:before {
+  color: White;
+}
+
+/* MOBILE WIDTH < 740px */
+@media screen and (max-width: 769px) {
+  .carousel {
+    width: 90vw;
+
+    .slick-arrow.slick-prev,
+    .slick-arrow.slick-next {
+      /* background:red; */
+      width: 25px;
+      height: 35px;
+    }
+    .slick-arrow.slick-prev:hover,
+    .slick-arrow.slick-next:hover {
+      cursor: pointer;
+      background: gray;
+    }
+    .slick-prev {
+      left: 0;
+      border-top-right-radius: 7px;
+      border-bottom-right-radius: 7px;
+    }
+    .slick-next {
+      right: 0px;
+      border-bottom-left-radius: 7px;
+      border-top-left-radius: 7px;
+    }
+    .iconarrow {
+      color: blue;
+      font-size: 20px;
+    }
+  }
+}
+
+/* TABLET WIDTH >=740px and width < 1024px*/
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+  .carousel {
+    width: 90vw;
+  }
+  .carousel .slick-arrow.slick-prev,
+  .carousel .slick-arrow.slick-next {
+    /* background:red; */
+    width: 35px;
+    height: 50px;
+    display: flex;
+  }
+}
