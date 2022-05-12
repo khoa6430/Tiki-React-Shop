@@ -1,0 +1,95 @@
+.rootpagecart {
+  margin-top: 5%;
+  font-size: 13px;
+}
+.leftcart {
+  //   flex: 1 1 0;
+  width: 58vw !important;
+  height: 100%;
+
+  font-size: 13px;
+}
+.rightcart {
+  width: 20vw;
+  margin-left: 2% !important;
+  font-size: 13px;
+}
+.framecartlistheader {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  padding-top: 13px;
+}
+.frameproductcartlist {
+  display: block;
+  margin-top: 3%;
+  width: 100%;
+}
+// BOX HEADER TITLE
+.checkboxframetitle {
+  margin-top: -1%;
+}
+.frameallproductcarttitle {
+  margin-left: 0%;
+}
+.framedongiatitle {
+  margin-left: 38%;
+}
+.framesoluongtitle {
+  margin-left: 10%;
+}
+.framethanhtientitle {
+  margin-left: 8%;
+}
+.frameicondeletetitle {
+  margin-left: 6% !important;
+
+  padding-right: 0px;
+  cursor: pointer;
+}
+//BOX PRODUCT
+.boxframe-oneproduct {
+  margin-left: 0px;
+  display: flex;
+  padding-top: 3%;
+}
+.framecheckbox-oneproduct {
+  margin: auto;
+  margin-left: 0%;
+  margin-right: 2%;
+}
+.boximg-oneproduct {
+  margin-left: 0px;
+  width: 10%;
+  height: 100%;
+  .img-oneproduct {
+    width: 100%;
+    height: 100%;
+  }
+}
+.boxname-oneproduct {
+  width: 18vw;
+  //   background-color: red;
+  margin-left: 2%;
+  text-align: left;
+}
+.boxsaleprice-oneproduct {
+  width: 120px;
+  margin-left: 3%;
+  text-align: left;
+}
+.boxquantity-oneproduct {
+  width: 50px;
+  margin-left: 2%;
+}
+.boxtotalmoney-oneproduct {
+  width: 120px;
+  margin-left: 50px;
+}
+.deleteproduct-oneproduct {
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  margin-top: 1%;
+  cursor: pointer;
+}

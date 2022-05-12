@@ -16,6 +16,8 @@ const userApi = {
                     name:currentUser.displayName,
                     email:currentUser.email,
                     photoUrl: currentUser.photoURL,
+                    addressUser : '',
+                    phoneUser :null
                 },50)
             },50);
 

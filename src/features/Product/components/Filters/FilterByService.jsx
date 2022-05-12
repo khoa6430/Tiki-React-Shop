@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, TextField, Typography, makeStyles, FormControlLabel, Checkbox } from '@material-ui/core';
 
@@ -35,6 +35,7 @@ function FilterByService({ filters = {}, onChange }) {
     var { name, checked } = e.target;
     onChange({ [name]: checked });
   };
+
   return (
     <Box className={classes.root}>
       <Typography variant="subtitle2">DỊCH VỤ</Typography>

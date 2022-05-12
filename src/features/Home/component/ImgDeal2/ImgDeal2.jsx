@@ -11,10 +11,10 @@ ImgDeal2.propTypes = {};
 function ImgDeal2(props) {
   return (
     <Box className="imgdeal2frame">
-      <img src={img1} className="imgDeal1" alt="" srcset="" />
-      <img src={img2} className="imgDeal2" alt="" srcset="" />
-      <img src={img3} className="imgDeal3" alt="" srcset="" />
-      <img src={img4} className="imgDeal4" alt="" srcset="" />
+      <img src={img1} className="imgDeal1" alt="" />
+      <img src={img2} className="imgDeal2" alt="" />
+      <img src={img3} className="imgDeal3" alt="" />
+      <img src={img4} className="imgDeal4" alt="" />
     </Box>
   );
 }

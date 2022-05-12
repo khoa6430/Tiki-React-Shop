@@ -1,46 +1,21 @@
-import React, { useEffect } from "react";
-import { Link, NavLink, Route, Routes, Switch } from "react-router-dom";
-import "./App.css";
-import AlbumFeature from "./features/Album";
-import TodoFeature from "./features/Todo";
-import ProductFeature from './features/Product';
-import NotFound from "./components/NotFound";
-import productApi from "./api/productApi";
-import Header from "./components/Header";
-import { Button } from '@material-ui/core'; 
-import { useSnackbar } from "notistack";
-import CartFeature from "./features/Cart";
-import ThanksYouFeature from "./features/Cart/thank";
-import Footer from "./components/Footer/Footer";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import React from "react";
 import { useDispatch } from 'react-redux';
-import { getMe } from './features/Auth/userSlice';
-import Login from "./features/Auth/component/Login";
-import { unwrapResult } from '@reduxjs/toolkit';
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { Route, Switch } from "react-router-dom";
+import "./App.css";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header";
+import NotFound from "./components/NotFound";
+import SlideTabCategory from "./components/SlideTabCategory/SlideTabCategory";
 import AdminDashboard from './features/Admin/AdminDashboard';
+import CartFeature from "./features/Cart";
+import ThanksYouFeature from "./features/Cart/thank";
 import HomeComponent from "./features/Home/HomeComponent";
+import ProductFeature from './features/Product';
 
 
 function App() {
-  const dispatch = useDispatch();
-  // const { enqueueSnackbar } = useSnackbar();
-    // useEffect(()=>{
-    //   const fetchProducts = async()=>{
-    //     const params={
-    //       _limit:10,
-    //     };
-    //     const productList = await productApi.getAll(params);
-    //     console.log(productList);
-    //   }
-    //   fetchProducts();
-    // },[]);
-
-    // const showNoti = ()=>{
-    //   enqueueSnackbar(`Successful.`, { variant: "success" });
-    // };
 
     const firebaseConfig = {
       apiKey: "AIzaSyD75OomAbRdEue8mGiSuk0mGOQnngjhhEc",
@@ -59,9 +34,9 @@ function App() {
   return (
     <div className="App">
       <Header />
+      {/*  Nếu bỏ sẽ match đúng component => HomeComponent sẽ ko dc render  */}
       <Switch>
         <Route path="/" component={HomeComponent} exact />
-  
         <Route path="/products" component={ProductFeature}/>
         <Route path="/cart" component={CartFeature}/>
         <Route path="/thanks" component={ThanksYouFeature}/>

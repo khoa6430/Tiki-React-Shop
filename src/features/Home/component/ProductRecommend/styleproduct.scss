@@ -55,9 +55,14 @@
 // PRODUCT
 .frameproductrecommend {
   //   margin-left: 50px;
-  //   background-color: green;
+
   width: 12vw;
   float: left;
+  border: 1px solid RGB(238, 238, 238);
+}
+.frameproductrecommend:hover {
+  cursor: pointer;
+  box-shadow: 0 0 11px RGB(33, 33, 33, 0.2);
 }
 
 .frameimageproductrecommend {
@@ -85,6 +90,14 @@
   align-items: flex-start;
   text-align: left;
   padding-top: 10%;
+}
+.framenameproductdetail {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 // IMAGE FREESHIP
 

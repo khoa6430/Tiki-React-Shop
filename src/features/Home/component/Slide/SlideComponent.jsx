@@ -7,6 +7,7 @@ import './carousel.scss';
 import { data } from '../../component/Slide/data';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
 import './style.scss';
+import { Box } from '@mui/system';
 
 SlideComponent.propTypes = {};
 const PreviousBtn = (props) => {
@@ -57,13 +58,15 @@ const carouselProperties = {
     },
   ],
 };
-
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 function SlideComponent(props) {
   return (
     <div className="carousel">
       <Slider {...carouselProperties}>
         {data.map((item) => (
-          <img src={item} alt="" className="imgslidecp" />
+          <img src={item.imgUrl} alt="" className="imgslidecp" />
         ))}
       </Slider>
     </div>

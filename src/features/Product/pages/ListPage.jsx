@@ -74,8 +74,10 @@ function ListPage(props) {
     }
 
     //check filters category
-    if (filters._filtercategory) {
-      arr = arr.filter((x) => x.category.id == filters._filtercategory);
+    if (filters._filtercategory === 0) {
+      arr = arr.filter((x) => x.category.id === filters._filtercategory);
+    } else if (filters._filtercategory) {
+      arr = arr.filter((x) => x.category.id === filters._filtercategory);
     }
     //check filter price
     if (filters._filterprice.salePrice_gte != 0 && filters._filterprice.salePrice_lte == 0) {

@@ -76,9 +76,9 @@ function SlideCategory(props) {
         <Box className="framcarouselcategory">
           <Slider {...carouselProperties}>
             {data.map((item) => (
-              <Box>
+              <div key={item.nameProduct}>
                 <Card item={item} />
-              </Box>
+              </div>
             ))}
           </Slider>
         </Box>

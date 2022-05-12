@@ -87,7 +87,7 @@ function SlideComponent(props) {
   return (
     <div className="carouselBrand">
       <Box className="brandch">
-        <img src={imgbrand} alt="" srcset="" style={{ width: '28px', height: '28px' }} />
+        <img src={imgbrand} alt="" style={{ width: '28px', height: '28px' }} />
         <span style={{ fontSize: '20px', marginLeft: '10px' }}>Thương hiệu chính hãng</span>
       </Box>
       <Box className="framecarouselbrand">

@@ -24,15 +24,16 @@ function AdminDashboard(props) {
   const classes = useStyle();
   const [open, setOpen] = useState(false);
   const [reload, setReload] = useState(false);
-
+  const [productAdd, setProductAdd] = useState(null);
   // DIALOG
   const handleClose = (event, reason) => {
     //ADD NEW PRODUCT TO FIREBASE
-    setReload(!reload);
     if (reason && reason == 'backdropClick') return;
     setOpen(false);
+    setReload(!reload);
+    setProductAdd(event.product);
   };
-  var openProductForm = (product) => {
+  var openProductForm = () => {
     setOpen(true);
   };
 
@@ -40,16 +41,12 @@ function AdminDashboard(props) {
     <div>
       <Box className={classes.titleql}>QUẢN LÝ SẢN PHẨM</Box>
       <Box style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '2vw', marginBottom: '1vw' }}>
-        <Button
-          variant="contained"
-          style={{ backgroundColor: '#12824C', color: '#FFFFFF' }}
-          onClick={() => openProductForm(1)}
-        >
+        <Button variant="contained" style={{ backgroundColor: '#12824C', color: '#FFFFFF' }} onClick={openProductForm}>
           Thêm sản phẩm mới
         </Button>
       </Box>
 
-      <EnhancedTable />
+      <EnhancedTable productAdd={productAdd} />
 
       {/* DIALOG ADD PRODUCT */}
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>

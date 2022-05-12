@@ -10,22 +10,42 @@ import { set, ref, onValue, remove, update } from 'firebase/database';
 import { db } from '../../../firebase';
 
 EditComponent.propTypes = {
-  product: PropTypes.object,
+  row: PropTypes.object,
   closeDialog: PropTypes.func,
 };
 
 function EditComponent(props) {
-  const { closeDialog, product } = props;
+  const { closeDialog, row } = props;
   const { enqueueSnackbar } = useSnackbar();
+
+  const add_dots = (e) => {
+    e.target.value = e.target.value.replace(/\D/g, '');
+    var inputValue = e.target.value.replace('.', '').split('').reverse().join(''); // reverse
+    var newValue = '';
+    for (var i = 0; i < inputValue.length; i++) {
+      if (i % 3 == 0) {
+        newValue += '.';
+      }
+      newValue += inputValue[i];
+    }
+    e.target.value = newValue.split('').reverse().join('');
+    e.target.value = e.target.value.substring(0, e.target.value.length - 1);
+    return e;
+  };
 
   const formik = useFormik({
     initialValues: {
-      idProduct: `${product.id}`,
-      nameProduct: `${product.name}`,
-      priceProduct: `${product.salePrice}`,
-      imgProduct: `${product.thumbnail}`,
+      idProduct: `${row.product.id}`,
+      nameProduct: `${row.product.name}`,
+      priceProduct: `${row.product.salePrice}`,
+      imgProduct: `${row.product.thumbnail}`,
     },
-    validationSchema: Yup.object({}),
+    validationSchema: Yup.object({
+      nameProduct: Yup.string()
+        .required('Bắt buộc!')
+        .matches(/^[a-zA-Z0-9]+$/, 'Tên sản phẩm không bao gồm ký tự đặc biệt'),
+      priceProduct: Yup.number().min(500, 'Vui lòng nhập giá tiền lớn hơn 500 VND').required('Bắt buộc!'),
+    }),
 
     onSubmit: (values) => {
       //UPDATE PRODUCT VALUE
@@ -33,16 +53,16 @@ function EditComponent(props) {
         //set again value from form user edit
         console.log(values);
         var updateProduct = {
-          ...product,
+          ...row.product,
           name: values.nameProduct,
           thumbnail: values.imgProduct,
           salePrice: Number(values.priceProduct),
         };
 
-        update(ref(db, `list-product/${product.id}`), updateProduct);
+        update(ref(db, `list-product/${row.product.id}`), updateProduct);
 
-        if (closeDialog) {
-          closeDialog();
+        if (typeof closeDialog == 'function') {
+          closeDialog({ productId: row.product.id, productIndex: row.productIndex });
         }
 
         //do some thing here on register successfully
@@ -52,8 +72,8 @@ function EditComponent(props) {
       }
     },
     onChange: (e) => {
+      console.log(e.target.value);
       formik.setFieldValue('imgProduct', e.target.value);
-      // setUrlImgProduct(e.target.value);
     },
   });
 
@@ -77,9 +97,7 @@ function EditComponent(props) {
           onChange={formik.handleChange}
           placeholder="Nhập tên sản phẩm"
         />
-        {/* {formik.errors.name && (
-          <p className="errorMsg"> {formik.errors.name} </p>
-        )} */}
+        {formik.errors.nameProduct && <p className="errorMsg"> {formik.errors.nameProduct} </p>}
         <label> Giá sản phẩm</label>
         <input
           type="text"
@@ -89,6 +107,7 @@ function EditComponent(props) {
           onChange={formik.handleChange}
           placeholder="Nhập giá sản phẩm"
         />
+        {formik.errors.priceProduct && <p className="errorMsg"> {formik.errors.priceProduct} </p>}
 
         <label> URL hình ảnh sản phẩm</label>
         <input

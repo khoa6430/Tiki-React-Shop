@@ -10,6 +10,9 @@ import imggiasoc from '../../../../assets/fs/giasoc.svg';
 import imgflash from '../../../../assets/fs/dealflash.svg';
 import imghomnay from '../../../../assets/fs/homnay.svg';
 import CountdownTimer from '../../component/MultiSlide/CountDownTimer/CountdownTimer';
+import { set, ref, onValue, remove, update, get } from 'firebase/database';
+import { db } from '../../../../firebase';
+import { useHistory } from 'react-router-dom';
 MultiSlide.propTypes = {};
 const PreviousBtn = (props) => {
   // console.log(props);
@@ -62,13 +65,23 @@ const carouselProperties = {
     },
   ],
 };
+
 const Card = ({ item }) => {
+  const history = useHistory();
+  var handleProductClick = (itemid) => {
+    history.push(`/products/${itemid}`);
+  };
   return (
-    <Box className="boxItemFS">
+    <div
+      className="boxItemFS"
+      onClick={() => {
+        handleProductClick(item.id);
+      }}
+    >
       <Box>
         <img
           className="multi__image"
-          src={item.imgUrl}
+          src={item.thumbnail}
           alt=""
           style={{
             width: '100%',
@@ -84,9 +97,9 @@ const Card = ({ item }) => {
 
       <Box style={{ display: 'flex', paddingLeft: '15px', height: '30px', marginTop: '5%' }}>
         <span className="dealprice">
-          {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.priceProduct)}
+          {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.salePrice)}
         </span>
-        <span className="percentprice">-{item.percentProduct}%</span>
+        <span className="percentprice">-{item.promotionPercent}%</span>
       </Box>
       <Box style={{ marginTop: '5px', paddingLeft: '5px', paddingBottom: '15px', borderRadius: '10px' }}>
         <Box className="deals__qty">
@@ -94,11 +107,35 @@ const Card = ({ item }) => {
           <span className="vmb">Vừa mở bán</span>
         </Box>
       </Box>
-    </Box>
+    </div>
   );
 };
 
+var getData = [];
+//GET DATA IN FIRST RENDER
+var idproductDefault = [
+  7942588, 24076826, 25490943, 9239246, 26629978, 22004565, 13682172, 8013507, 26720271, 8967443, 13637898, 20540129,
+];
+//   var data2 = [];
+for (var i = 0; i < idproductDefault.length; i++) {
+  onValue(
+    ref(db, `/list-product/${idproductDefault[i]}`),
+    (snapshot) => {
+      //do firebase
+      const data = snapshot.val();
+      if (data !== null) {
+        getData.push(data);
+      }
+    },
+    {
+      onlyOnce: true,
+    }
+  );
+}
+
 function MultiSlide(props) {
+  const [listproduct, setListProduct] = useState(getData);
+
   return (
     <div className="carousel2">
       <Box className="framegiasoc">
@@ -122,8 +159,8 @@ function MultiSlide(props) {
       >
         <Box className="slidecarouselfs">
           <Slider {...carouselProperties}>
-            {multiData.map((item) => (
-              <Card item={item} />
+            {listproduct.map((item) => (
+              <Card item={item} key={item.id} />
             ))}
           </Slider>
         </Box>

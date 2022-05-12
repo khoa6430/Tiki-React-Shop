@@ -10,16 +10,17 @@ import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { unwrapResult } from '@reduxjs/toolkit';
+import { current, unwrapResult } from '@reduxjs/toolkit';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
-import { ref, set } from 'firebase/database';
+import { onValue, ref, set } from 'firebase/database';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import logofreeship from '../../../src/img/logofreeship.png';
-import logoheader from '../../../src/img/logoheader.png';
+// import logoheader from '../../../src/img/logoheader.png';
+import logoheader from '../../../src/img/xBoss_logo.png';
 import logouser from '../../../src/img/logouser.png';
 import Login from '../../features/Auth/component/Login';
 import { getMe, logout } from '../../features/Auth/userSlice';
@@ -31,46 +32,11 @@ import { setSearchValue } from '../Header/SearchComponent/searchSlice';
 import DrawerComp from './Drawer';
 import './style.scss';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import SlideTabCategory from '../SlideTabCategory/SlideTabCategory';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  // framelogo: {
-  //   marginLeft: '10%',
-  //   marginBottom: '10px',
-  //   [theme.breakpoints.down('xs')]: {
-  //     marginLeft: 'auto',
-  //   },
-  //   [theme.breakpoints.between('sm', 'md')]: {
-  //     marginLeft: 'auto',
-  //   },
-  //   '@media (min-width: 1280px)': {},
-  // },
-  // imglogo: {
-  //   width: '60px',
-  //   height: '40px',
-  //   [theme.breakpoints.down('xs')]: {
-  //     width: '60px',
-  //     height: '40px',
-  //   },
-  //   [theme.breakpoints.between('sm', 'md')]: {
-  //     width: '60px',
-  //     height: '40px',
-  //   },
-  //   '@media (min-width: 1280px)': {},
-  // },
-  // imglogofreeship: {
-  //   marginTop: '10%',
-  //   width: '87px',
-  //   height: '12px',
-  //   [theme.breakpoints.down('xs')]: {
-  //     display: 'none',
-  //   },
-  //   [theme.breakpoints.between('sm', 'md')]: {
-  //     display: 'none',
-  //   },
-  //   '@media (min-width: 1280px)': {},
-  // },
   menuButton: {
     marginRight: theme.spacing(2),
     backgroundColor: '#21b6ae',
@@ -119,11 +85,28 @@ export default function Header() {
   const dispatch = useDispatch();
   // const currentUser =
 
-  const currentUser = useSelector((state) => state.user.current);
+  var currentUser = useSelector((state) => state.user.current);
   const checkLogged = Object.keys(currentUser).length;
 
   const history = useHistory();
-  const cartItemsCount = useSelector(cartItemsCountSelector);
+  const cartItemsCount2 = useSelector(cartItemsCountSelector);
+
+  const [cartItemCount, setCartItemCount] = useState();
+
+  // useEffect(() => {
+  //   //GET TOTAL QUANTITY OF FIRST RENDER
+  //   console.log('id', currentUser.id);
+  //   onValue(ref(db, `/list-cart/${currentUser.id}`), (snapshot) => {
+  //     const data = snapshot.val();
+  //     var getTotalquanity = 0;
+  //     if (data != null) {
+  //       Object.values(data).map((item) => {
+  //         getTotalquanity += item.quantity;
+  //       });
+  //       setCartItemCount(getTotalquanity);
+  //     }
+  //   });
+  // }, [cartItemsCount2]);
 
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
@@ -168,23 +151,54 @@ export default function Header() {
         //Get me when signed in
         const action = getMe();
         const actionResult = await dispatch(action);
-        const currentUser = unwrapResult(actionResult);
-        console.log('Logged in user', currentUser);
+        var currentUser = unwrapResult(actionResult);
+        //Check user exist
+        var listIdUser = [];
+        onValue(
+          ref(db, `/list-user`),
+          (snapshot) => {
+            const data = snapshot.val();
+            if (data !== null) {
+              Object.values(data).map((item) => {
+                listIdUser.push(item);
+              });
+              var checkExist = 0;
+              listIdUser.map((i) => {
+                if (i.id == currentUser.id) {
+                  checkExist = 1;
+                }
+              });
+              if (checkExist == 0) {
+                //Save your firebase
+                set(ref(db, `list-user/${currentUser.id}`), currentUser);
+              } else if (checkExist != 0) {
+              }
+            }
+          },
+          {
+            onlyOnce: true,
+          }
+        );
 
-        //Save user to database
-        // onValue(ref(db,'list-user'), (snapshot) => {
-        set(ref(db, `list-user/${currentUser.id}`), currentUser);
-        // },{
-        //     onlyOnce: true
-        // });
+        //CART
+        onValue(ref(db, `/list-cart/${currentUser.id}`), (snapshot) => {
+          const data = snapshot.val();
+          var getTotalquanity = 0;
+          if (data != null) {
+            Object.values(data).map((item) => {
+              getTotalquanity += item.quantity;
+            });
+            setCartItemCount(getTotalquanity);
+          } else {
+            setCartItemCount(0);
+          }
+        });
+
+        console.log('Logged in user', currentUser);
       } catch (error) {
         console.log('Failed to login', error.message);
       }
-      // console.log('Logged in user : ', user.displayName);
-      // const token = await user.getIdToken();
-      // console.log('Logged in user token: ', token);
     });
-
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
 
@@ -249,7 +263,7 @@ export default function Header() {
         {/* LOGO FREE SHIP */}
         <Toolbar className="frameheader">
           <Box className="framelogo">
-            <Link to="/products" className="linklogo">
+            <Link to="/" className="linklogo">
               <img src={logoheader} alt="logoheader" className="imglogo" />
               <img src={logofreeship} alt="logoheader" className="imglogofreeship" />
             </Link>
@@ -329,7 +343,7 @@ export default function Header() {
                 onClick={handleCartClick}
                 className="frameiconcart"
               >
-                <StyledBadge badgeContent={cartItemsCount}>
+                <StyledBadge badgeContent={cartItemCount}>
                   <ShoppingCart style={{ fontSize: 32 }} />
                 </StyledBadge>
                 <Typography variant="body2" className="contentcart">
@@ -386,6 +400,9 @@ export default function Header() {
           )}
         </DialogContent>
       </Dialog>
+      <Box style={{ background: 'white', margin: 'auto' }}>
+        <SlideTabCategory />
+      </Box>
     </Box>
   );
 }

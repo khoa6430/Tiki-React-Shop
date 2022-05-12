@@ -1,0 +1,82 @@
+.carouseltabcategory {
+  background-color: #fff;
+  width: 78.5vw;
+  margin: auto;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  font-size: 14px;
+  line-height: 16px;
+  color: rgb(56, 56, 61);
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.frame-listcategoryslide {
+  // transition: box-shadow 0.3s;
+  // width: 100%;
+  // height: 500px; */
+  /* margin: 50px; */
+  // border-radius: 10px;
+
+  // float: left;
+  // cursor: pointer;
+}
+.frametilecategoryitem {
+  // background-color: antiquewhite;
+  // display: flex;
+  // padding-right: 1vw;
+  // padding: auto;
+  // margin: auto;
+  margin-right: 5px;
+  flex-wrap: wrap;
+  word-wrap: normal;
+}
+.boxItemFS:hover {
+  cursor: pointer;
+  box-shadow: 0 0 11px RGB(33, 33, 33, 0.2);
+}
+.carouseltabcategory .slick-arrow.slick-prev {
+  margin-left: -1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.carouseltabcategory .slick-arrow.slick-next {
+  margin-left: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.carouseltabcategory .slick-arrow.slick-prev:hover,
+.carouseltabcategory .slick-arrow.slick-next:hover {
+  cursor: pointer;
+}
+.carouseltabcategory .slick-prev {
+  left: 0;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.carouseltabcategory .slick-next {
+  right: 0;
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+}
+.slick-prev::before,
+.slick-next::before {
+  display: none;
+}
+
+/* MOBILE WIDTH < 740px */
+@media screen and (max-width: 740px) {
+  .carouseltabcategory {
+    width: 90vw;
+  }
+}
+
+/* TABLET WIDTH >=740px and width < 1024px*/
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+  .carouseltabcategory {
+    width: 90vw;
+  }
+}
