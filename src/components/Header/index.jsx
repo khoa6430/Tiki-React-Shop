@@ -237,15 +237,15 @@ export default function Header() {
   const LIST_PROPOSESEARCH = [
     {
       id: 1,
-      valueSearch: 'Mac',
+      valueSearch: 'Laptop',
     },
     {
       id: 2,
-      valueSearch: 'ao',
+      valueSearch: 'Khẩu trang',
     },
     {
       id: 3,
-      valueSearch: 'iphone',
+      valueSearch: 'iPhone',
     },
     {
       id: 4,
@@ -294,7 +294,7 @@ export default function Header() {
             <Box style={{ display: 'flex' }}>
               {/* LOGIN  */}
 
-              <img src={logouser} alt="logouser" className="logouser" />
+              <img src={checkLogged == 0 ? logouser : currentUser.photoUrl} alt="logouser" className="logouser" />
 
               {/* USER HAVEN'T LOGIN */}
               {checkLogged == 0 && (

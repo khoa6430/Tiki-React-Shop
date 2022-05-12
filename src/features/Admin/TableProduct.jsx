@@ -110,6 +110,18 @@ const headCells = [
     label: 'Giá tiền',
   },
   {
+    id: 'orginalprice',
+    numeric: true,
+    disablePadding: false,
+    label: 'Giá gốc',
+  },
+  {
+    id: 'category2',
+    numeric: true,
+    disablePadding: false,
+    label: 'Số % giảm giá',
+  },
+  {
     id: 'category',
     numeric: false,
     disablePadding: true,
@@ -200,7 +212,7 @@ const EnhancedTableToolbar = (props) => {
           Thông tin sản phẩm
         </Typography>
       )}
-
+      {/* 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
@@ -213,7 +225,7 @@ const EnhancedTableToolbar = (props) => {
             <FilterListOutlined />
           </IconButton>
         </Tooltip>
-      )}
+      )} */}
     </Toolbar>
   );
 };
@@ -426,7 +438,10 @@ export default function EnhancedTable(props) {
                       </TableCell>
 
                       <TableCell align="right"> {formatPrice(row.salePrice)}</TableCell>
+                      <TableCell align="right"> {formatPrice(row.originalPrice)}</TableCell>
+                      <TableCell align="right">{row.promotionPercent}%</TableCell>
                       <TableCell align="left">{row.category.name}</TableCell>
+
                       <TableCell align="right">
                         <img src={row.thumbnail} alt="logouser" className={classes.imgProduct} />
                       </TableCell>

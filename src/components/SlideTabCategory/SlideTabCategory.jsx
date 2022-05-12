@@ -70,7 +70,9 @@ const Card = ({ item }) => {
   };
   return (
     // <div className="frame-listcategoryslide" onClick={handleProductClick}>
-    <div className="frametilecategoryitem">{item}</div>
+    <div className="frametilecategoryitem" onClick={handleProductClick}>
+      {item}
+    </div>
     // </div>
   );
 };

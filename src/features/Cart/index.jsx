@@ -94,7 +94,7 @@ function CartFeature(props) {
       }
     );
   }, [open]);
-
+  console.log(currentUser);
   const handleCloseWarning = (event, reason) => {
     //CLOSE WARNING DIALOG
     if (reason && reason == 'backdropClick') return;

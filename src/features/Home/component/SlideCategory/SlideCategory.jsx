@@ -5,7 +5,7 @@ import { data } from '../../component/SlideCategory/data';
 import { Box } from '@material-ui/core';
 import './multicarousel.scss';
 import { display } from '@mui/system';
-
+import { useHistory } from 'react-router-dom';
 const carouselProperties = {
   infinite: false,
   slidesToShow: 5,
@@ -36,6 +36,7 @@ const carouselProperties = {
     },
   ],
 };
+
 const Card = ({ item }) => {
   return (
     <Box className="boxItemCategory" style={{ height: '180px', marginTop: '10px', padding: '10px 15px' }}>
@@ -60,6 +61,11 @@ const Card = ({ item }) => {
 };
 
 function SlideCategory(props) {
+  const history = useHistory();
+  const handleClick = (item) => {
+    console.log(item);
+    history.push('/products/');
+  };
   return (
     <div className="carouselCategory">
       <Box
@@ -76,7 +82,7 @@ function SlideCategory(props) {
         <Box className="framcarouselcategory">
           <Slider {...carouselProperties}>
             {data.map((item) => (
-              <div key={item.nameProduct}>
+              <div key={item.nameProduct} onClick={() => handleClick(item)}>
                 <Card item={item} />
               </div>
             ))}

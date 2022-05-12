@@ -18,7 +18,6 @@
   // border-radius: 10px;
 
   // float: left;
-  // cursor: pointer;
 }
 .frametilecategoryitem {
   // background-color: antiquewhite;
@@ -26,6 +25,7 @@
   // padding-right: 1vw;
   // padding: auto;
   // margin: auto;
+  cursor: pointer;
   margin-right: 5px;
   flex-wrap: wrap;
   word-wrap: normal;
@@ -70,13 +70,13 @@
 /* MOBILE WIDTH < 740px */
 @media screen and (max-width: 740px) {
   .carouseltabcategory {
-    width: 90vw;
+    display: none;
   }
 }
 
 /* TABLET WIDTH >=740px and width < 1024px*/
 @media only screen and (min-width: 740px) and (max-width: 1023px) {
   .carouseltabcategory {
-    width: 90vw;
+    display: none;
   }
 }

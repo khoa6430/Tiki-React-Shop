@@ -38,12 +38,12 @@ function EditComponent(props) {
       idProduct: `${row.product.id}`,
       nameProduct: `${row.product.name}`,
       priceProduct: `${row.product.salePrice}`,
+      percentPromotion: `${row.product.promotionPercent}`,
       imgProduct: `${row.product.thumbnail}`,
     },
     validationSchema: Yup.object({
-      nameProduct: Yup.string()
-        .required('Bắt buộc!')
-        .matches(/^[a-zA-Z0-9]+$/, 'Tên sản phẩm không bao gồm ký tự đặc biệt'),
+      nameProduct: Yup.string().required('Bắt buộc!'),
+      // .matches(/^[a-zA-Z0-9]+$/, 'Tên sản phẩm không bao gồm ký tự đặc biệt'),
       priceProduct: Yup.number().min(500, 'Vui lòng nhập giá tiền lớn hơn 500 VND').required('Bắt buộc!'),
     }),
 
@@ -57,6 +57,7 @@ function EditComponent(props) {
           name: values.nameProduct,
           thumbnail: values.imgProduct,
           salePrice: Number(values.priceProduct),
+          promotionPercent: Number(values.percentPromotion),
         };
 
         update(ref(db, `list-product/${row.product.id}`), updateProduct);
@@ -108,6 +109,15 @@ function EditComponent(props) {
           placeholder="Nhập giá sản phẩm"
         />
         {formik.errors.priceProduct && <p className="errorMsg"> {formik.errors.priceProduct} </p>}
+        <label> Phần trăm giảm giá sản phẩm</label>
+        <input
+          type="text"
+          id="percentPromotion"
+          name="percentPromotion"
+          value={formik.values.percentPromotion}
+          onChange={formik.handleChange}
+          placeholder="Nhập số phần trăm giảm"
+        />
 
         <label> URL hình ảnh sản phẩm</label>
         <input
