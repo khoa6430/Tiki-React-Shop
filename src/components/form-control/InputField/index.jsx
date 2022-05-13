@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { TextField } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
@@ -11,43 +11,27 @@ InputField.propTypes = {
 };
 
 function InputField(props) {
-  const { form, name, label, disabled, onChangeImg, valueDefault } = props;
+  const { form, name, label, disabled } = props;
   const { errors } = form;
   const hasError = errors[name];
-
-  const [textInput, setTextInput] = useState('');
-
   // console.log(errors[name],formState.touched[name]);
-
-  const handleTextInputChange = (event) => {
-    console.log(event.target.value);
-    setTextInput(event.target.value);
-    // if(name == 'imgProduct'){
-    onChangeImg(event.target.value);
-    // }
-  };
-
   return (
     <Controller
       name={name}
       control={form.control}
-      // defaultValue={textInput}
-
       render={({ onChange, onBlur, value, name }) => (
         <TextField
           margin="normal"
           variant="outlined"
           fullWidth
           label={label}
-          // disabled ={disabled}
-          error={!!hasError} //chuyen ve true/false
+          disabled={disabled}
+          error={!!hasError}
           helperText={errors[name]?.message}
           name={name}
-          // value = {'123'}
-          // onChange={onChange}
-          value={textInput}
-          onChange={handleTextInputChange}
-          // onChange={(value) =>changeHandler(value)}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
         />
       )}
     />

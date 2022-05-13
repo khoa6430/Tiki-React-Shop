@@ -49,24 +49,24 @@ const useStyle = makeStyles((theme) => ({
     },
   },
 }));
-var currentUser = {};
+
+var getUserData = [];
 
 function CartFeature(props) {
   const classes = useStyle();
   const history = useHistory();
   const cartTotal = useSelector(cartTotalSelector);
+  const [currentUser, setCurrentUser] = useState({});
   const currentUserID = useSelector((state) => state.user.current.id);
   const [open, setOpen] = useState(false);
   const [openWarning, setOpenWarning] = useState(false);
   var [allItemCart, setAllItemCart] = useState([]);
-
+  const [reload, setReload] = useState(false);
   const getItemCart = () => {
     onValue(
       ref(db, `list-cart/${currentUserID}`),
       (snapshot) => {
         var data = snapshot.val();
-        console.log(currentUser.id);
-        console.log(data);
         //convert object to array value
         if (data !== null) {
           data = Object.values(data);
@@ -80,31 +80,50 @@ function CartFeature(props) {
     );
   };
 
+  // useEffect(() => {
+  //   onValue(
+  //     ref(db, `/list-user/${currentUserID}`),
+  //     (snapshot) => {
+  //       const data = snapshot.val();
+  //       if (data !== null) {
+  //         getUserData = data;
+  //       }
+  //     },
+  //     {
+  //       onlyOnce: true,
+  //     }
+  //   );
+  //   console.log('data:', getUserData);
+  //   setCurrentUser(currentUser);
+  // }, [open]);
+
   useEffect(() => {
-    onValue(
-      ref(db, `/list-user/${currentUserID}`),
-      (snapshot) => {
-        const data = snapshot.val();
-        if (data !== null) {
-          currentUser = data;
+    getItemCart();
+    var getdata = [];
+    async function getUserCurent() {
+      await onValue(
+        ref(db, `/list-user/${currentUserID}`),
+        (snapshot) => {
+          const data = snapshot.val();
+          if (data != null) {
+            getdata = data;
+            setCurrentUser(getdata);
+          }
+        },
+        {
+          onlyOnce: true,
         }
-      },
-      {
-        onlyOnce: true,
-      }
-    );
+      );
+    }
+    getUserCurent();
   }, [open]);
-  console.log(currentUser);
+
   const handleCloseWarning = (event, reason) => {
     //CLOSE WARNING DIALOG
     if (reason && reason == 'backdropClick') return;
     setOpenWarning(false);
   };
 
-  useEffect(() => {
-    getItemCart();
-  }, []);
-  console.log('item', allItemCart);
   const [selected, setSelected] = useState([]);
   const [totalSelected, setTotalSelected] = useState(0);
   const dispatch = useDispatch();

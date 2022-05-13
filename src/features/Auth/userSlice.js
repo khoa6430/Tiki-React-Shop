@@ -7,7 +7,13 @@ export const getMe = createAsyncThunk('user/getMe',async(params,thunkAPI)  => {
     const currentUser = await userApi.getMe();
     return currentUser;
 
-}) ;
+});
+export const getMe2 = createAsyncThunk('user/getMe2',async(payload)  => {
+    //get API
+    const currentUser = await userApi.getMe2(payload);
+    return currentUser;
+
+});
 
 const userSlice = createSlice({
     name:'user',
@@ -30,6 +36,17 @@ const userSlice = createSlice({
             state.error  = action.error;
         },
         [getMe.fulfilled] : (state,action) =>{
+            state.loading = false;
+            state.current = action.payload;
+        },
+        [getMe2.pending] : (state) =>{
+            state.loading= true;
+        },
+        [getMe2.rejected] : (state,action) =>{
+            state.loading = false;
+            state.error  = action.error;
+        },
+        [getMe2.fulfilled] : (state,action) =>{
             state.loading = false;
             state.current = action.payload;
         },

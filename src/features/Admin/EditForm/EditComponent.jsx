@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import './Edit.css';
+import './Edit.scss';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Box } from '@material-ui/core';
@@ -81,7 +81,7 @@ function EditComponent(props) {
   return (
     <section>
       <form className="infoform" onSubmit={formik.handleSubmit}>
-        <label> ID sản phẩm</label>
+        <label className="labeltitle-editform"> ID sản phẩm</label>
         <input
           type="text"
           id="idProduct"
@@ -89,7 +89,7 @@ function EditComponent(props) {
           value={formik.values.idProduct}
           onChange={formik.handleChange}
         />
-        <label> Tên sản phẩm</label>
+        <label className="labeltitle-editform"> Tên sản phẩm</label>
         <input
           type="text"
           id="nameProduct"
@@ -99,7 +99,7 @@ function EditComponent(props) {
           placeholder="Nhập tên sản phẩm"
         />
         {formik.errors.nameProduct && <p className="errorMsg"> {formik.errors.nameProduct} </p>}
-        <label> Giá sản phẩm</label>
+        <label className="labeltitle-editform"> Giá sản phẩm</label>
         <input
           type="text"
           id="priceProduct"
@@ -109,7 +109,7 @@ function EditComponent(props) {
           placeholder="Nhập giá sản phẩm"
         />
         {formik.errors.priceProduct && <p className="errorMsg"> {formik.errors.priceProduct} </p>}
-        <label> Phần trăm giảm giá sản phẩm</label>
+        <label className="labeltitle-editform"> Phần trăm giảm giá sản phẩm</label>
         <input
           type="text"
           id="percentPromotion"
@@ -119,7 +119,7 @@ function EditComponent(props) {
           placeholder="Nhập số phần trăm giảm"
         />
 
-        <label> URL hình ảnh sản phẩm</label>
+        <label className="labeltitle-editform"> URL hình ảnh sản phẩm</label>
         <input
           type="text"
           id="imgProduct"

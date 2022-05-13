@@ -139,7 +139,7 @@ function FormAddAddress(props) {
   return (
     <section>
       <form className="infoform" onSubmit={formik.handleSubmit}>
-        <label>Họ tên</label>
+        <label className="labeltitle-addform">Họ tên</label>
         <input
           type="text"
           id="nameUser"
@@ -149,7 +149,7 @@ function FormAddAddress(props) {
           placeholder="Nhập họ tên"
         />
         {formik.errors.nameUser && <p className="errorMsg"> {formik.errors.nameUser} </p>}
-        <label> Điện thoại di động</label>
+        <label className="labeltitle-addform">Điện thoại di động</label>
         <input
           type="text"
           id="phoneUser"
@@ -160,7 +160,7 @@ function FormAddAddress(props) {
         />
         {formik.errors.phoneUser && <p className="errorMsg"> {formik.errors.phoneUser} </p>}
 
-        <label>Tỉnh/Thành phố</label>
+        <label className="labeltitle-addform">Tỉnh/Thành phố</label>
 
         {/* SELECT CITY  */}
         <CustomSelect
@@ -174,9 +174,8 @@ function FormAddAddress(props) {
           options={listAddressCity}
         />
         {/* {formik.errors.idCategoryProduct ? <div className="error">{formik.errors.idCategoryProduct}</div> : null} */}
-
         {/* SELECT DISTRICT  */}
-        <label>Quận/Huyện</label>
+        <label className="labeltitle-addform">Quận/Huyện</label>
         <CustomSelect
           className="Quận/Huyện"
           onChange={(value) => {
@@ -187,9 +186,8 @@ function FormAddAddress(props) {
           value={formik.values.districtUser}
           options={listAddressDistricts}
         />
-
         {/* SELECT WARD */}
-        <label>Phường/Xã</label>
+        <label className="labeltitle-addform">Phường/Xã</label>
         <CustomSelect
           className="Phường/Xã"
           onChange={(value) => {
@@ -198,8 +196,7 @@ function FormAddAddress(props) {
           value={formik.values.wardUser}
           options={listAddressWards}
         />
-
-        <label> Địa chỉ</label>
+        <label className="labeltitle-addform"> Địa chỉ</label>
         <input
           type="text"
           id="streetUser"
@@ -208,7 +205,6 @@ function FormAddAddress(props) {
           onChange={formik.handleChange}
           placeholder="Ví dụ:52, đường Trần Hưng Đạo"
         />
-
         <button type="submit">Lưu thông tin</button>
       </form>
     </section>

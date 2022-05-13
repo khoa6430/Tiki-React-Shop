@@ -33,6 +33,7 @@ import DrawerComp from './Drawer';
 import './style.scss';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SlideTabCategory from '../SlideTabCategory/SlideTabCategory';
+import Register from '../../features/Auth/component/Register';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -87,31 +88,14 @@ export default function Header() {
 
   var currentUser = useSelector((state) => state.user.current);
   const checkLogged = Object.keys(currentUser).length;
-
   const history = useHistory();
   const cartItemsCount2 = useSelector(cartItemsCountSelector);
 
   const [cartItemCount, setCartItemCount] = useState();
 
-  // useEffect(() => {
-  //   //GET TOTAL QUANTITY OF FIRST RENDER
-  //   console.log('id', currentUser.id);
-  //   onValue(ref(db, `/list-cart/${currentUser.id}`), (snapshot) => {
-  //     const data = snapshot.val();
-  //     var getTotalquanity = 0;
-  //     if (data != null) {
-  //       Object.values(data).map((item) => {
-  //         getTotalquanity += item.quantity;
-  //       });
-  //       setCartItemCount(getTotalquanity);
-  //     }
-  //   });
-  // }, [cartItemsCount2]);
-
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
   const [anchorEl, setAnchoEl] = useState(null);
-
   //function to logout account
   function googleSignout() {
     firebase
@@ -153,6 +137,7 @@ export default function Header() {
         const actionResult = await dispatch(action);
         var currentUser = unwrapResult(actionResult);
         //Check user exist
+        console.log(currentUser.id);
         var listIdUser = [];
         onValue(
           ref(db, `/list-user`),
@@ -199,6 +184,7 @@ export default function Header() {
         console.log('Failed to login', error.message);
       }
     });
+
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
 
@@ -224,12 +210,17 @@ export default function Header() {
     setAnchoEl(null);
     const action = logout();
     dispatch(action);
-
+    setCartItemCount(0);
     googleSignout();
   };
 
   const handleCartClick = () => {
-    history.push('/cart');
+    //User haven't login ==> open login google
+    if (checkLogged == 0) {
+      setOpen(true);
+    } else {
+      history.push('/cart');
+    }
   };
   const handleAdminClick = () => {
     history.push('/admin-dashboard');
@@ -252,7 +243,6 @@ export default function Header() {
       valueSearch: 'SSD',
     },
   ];
-
   var handleProposeSearch = (values) => {
     const actionSearchValue = setSearchValue(values);
     dispatch(actionSearchValue);
@@ -328,7 +318,7 @@ export default function Header() {
               {/* END LOGIN  */}
 
               {/* CART ICON */}
-
+              {/* USER HAVEN'T LOGIN */}
               <IconButton
                 disableRipple
                 size="large"
@@ -378,16 +368,16 @@ export default function Header() {
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
         <Close className={classes.closeButton} onClick={handleClose} />
         <DialogContent>
-          {/* {mode === MODE.REGISTER && (
+          {mode === MODE.REGISTER && (
             <>
-              <Register closeDialog={handleClose}/>
-              <Box textAlign='center'>
-                <Button color='primary' onClick={()=>setMode(MODE.LOGIN)}>
+              <Register closeDialog={handleClose} />
+              <Box textAlign="center">
+                <Button color="primary" onClick={() => setMode(MODE.LOGIN)}>
                   Đã có tài khoản. Đăng nhập tại đây
                 </Button>
               </Box>
             </>
-          )} */}
+          )}
           {mode === MODE.LOGIN && (
             <>
               <Login closeDialog={handleClose} />
